@@ -3,240 +3,9 @@
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
-
-		<script id = "JavaScript_form_manipulation_info_reception">
-
-		window.onload = page_load_elements; 
-		//On load, hide all selectable fields until dropdown is used
-		var traveler_count = 1; 
-		//For add/remove traveler functions 
-		var leg_count = 1; 
-		//For keeping track of legs and leg information 
-
-		function page_load_elements()
-		{
-			
-			//var public_vehicle = document.getElementById("vehicle_type_public");
-			//var private_vehicle = document.getElementById("vehicle_type_private");
-			//var rental_vehicle = document.getElementById("vehicle_type_rental"); 
-			
-			//var commercial_plane = document.getElementById("plane_type_commercial");
-			//var private_plane = document.getElementById("plane_type_private"); 
-			
-			//var plane_mode = document.getElementById("plane_mode_of_travel");
-			//var vehicle_mode = document.getElementById("vehicle_mode_of_travel"); 
-			//var train_mode = document.getElementById("train_mode_of_travel");
-			//var other_mode = document.getElementById("other_mode_of_travel"); 
-
-			//var lodging_show = document.getElementById("lodging_section");
-		
-			//var hotel = document.getElementById("lodging_type_hotel"); 
-			//var private_res =  document.getElementById("lodging_type_private_residence"); 
-			//var other_res = document.getElementById("lodging_type_other"); 
-
-			//var ers_text = document.getElementById("elevated_risk_situation");  
-
-			//ers_text.style.display = "none";
-
-			//public_vehicle.style.display = "none";
-			//private_vehicle.style.display = "none";
-			//rental_vehicle.style.display = "none";
-			
-			//commercial_plane.style.display = "none";
-			//private_plane.style.display = "none";
-			
-			//plane_mode.style.display = "none";
-			//vehicle_mode.style.display = "none";
-			//train_mode.style.display = "none";
-			//other_mode.style.display = "none";
-			
-			//lodging_show.style.display = "none";
-			
-			//hotel.style.display = "none";
-			//private_res.style.display = "none";
-			//other_res.style.display = "none";
-		}//function page_load_elements
-
-		function elevated_risk()
-		{
-			var ers_check = document.getElementById("elevated_risk_check");
-			var ers_text = document.getElementById("elevated_risk_situation");  
-
-			if(ers_check.checked)
-			{
-				ers_text.style.display = "block"; 
-			}
-			else
-			{
-				ers_text.style.display = "none"; 
-			}
-
-		}//function elevated_risk
-
-		function transportation_choice()
-		{
-			var mode = document.getElementById("mode_of_travel"); 
-			var plane_mode = document.getElementById("plane_mode_of_travel");
-			var vehicle_mode = document.getElementById("vehicle_mode_of_travel"); 
-			var train_mode = document.getElementById("train_mode_of_travel");
-			var other_mode = document.getElementById("other_mode_of_travel"); 
-
-
-			if (mode.value == "Plane")
-			{
-				
-				plane_mode.style.display = "block";
-				vehicle_mode.style.display = "none";
-				train_mode.style.display = "none";
-				other_mode.style.display = "none";
-			}
-			else if (mode.value == "Vehicle")
-			{
-				//overall options 
-				vehicle_mode.style.display = "block";
-				plane_mode.style.display = "none";
-				train_mode.style.display = "none";
-				other_mode.style.display = "none";
-			}
-			else if (mode.value == "Train")
-			{
-				train_mode.style.display = "block";
-				plane_mode.style.display = "none";
-				vehicle_mode.style.display = "none";
-				other_mode.style.display = "none";
-			}
-			else if (mode.value == "Other")
-			{
-				other_mode.style.display = "block";
-				plane_mode.style.display = "none";
-				vehicle_mode.style.display = "none";
-				train_mode.style.display = "none";
-			}
-			else
-			{
-				other_mode.style.display = "none";
-				plane_mode.style.display = "none";
-				vehicle_mode.style.display = "none";
-				train_mode.style.display = "none";
-			}
-		}//function transportation_choice
-
-		function vehicle_type_choice()
-		{
-			//car options 
-			var vehicle_type = document.getElementById("type_of_vehicle"); 
-			var public_vehicle = document.getElementById("vehicle_type_public");
-			var private_vehicle = document.getElementById("vehicle_type_private");
-			var rental_vehicle = document.getElementById("vehicle_type_rental"); 
-
-			if(vehicle_type.value == "Rental")
-			{
-				public_vehicle.style.display = "none";
-				private_vehicle.style.display = "none"; 
-				rental_vehicle.style.display = "block";
-			}
-			else if(vehicle_type.value == "Private")
-			{
-				public_vehicle.style.display = "none";
-				private_vehicle.style.display = "block"; 
-				rental_vehicle.style.display = "none";
-			}
-			else if(vehicle_type.value == "Public")
-			{
-				public_vehicle.style.display = "block";
-				private_vehicle.style.display = "none"; 
-				rental_vehicle.style.display = "none";
-			}
-			else
-			{
-				public_vehicle.style.display = "none";
-				private_vehicle.style.display = "none"; 
-				rental_vehicle.style.display = "none";
-			}
-		}//function vehicle_type_choice
-
-		function plane_type_choice()
-		{
-			var plane_type = document.getElementById("type_of_plane"); 
-			var commercial_plane = document.getElementById("plane_type_commercial");
-			var private_plane = document.getElementById("plane_type_private"); 
-
-			if(plane_type.value == "Commercial")
-			{
-				commercial_plane.style.display = "block"; 
-				private_plane.style.display = "none"; 
-			}
-			else if(plane_type.value == "Private")
-			{
-				commercial_plane.style.display = "none"; 
-				private_plane.style.display = "block"; 
-			}
-			else
-			{
-				commercial_plane.style.display = "none"; 
-				private_plane.style.display = "none"; 
-			}
-		}//function plane_type_choice
-
-		function lodging_choice()
-		{
-			var lodging = document.getElementById("lodging_check");
-			var lodging_show = document.getElementById("lodging_section");
-
-			if(lodging.value == "Yes")
-			{
-				lodging_show.style.display = "block";
-			}
-			else
-			{
-				lodging_show.style.display = "none"; 
-			}
-
-		}//function lodging_choice
-
-		function lodging_type()
-		{
-			var stay = document.getElementById("type_of_lodging"); 
-			var hotel = document.getElementById("lodging_type_hotel"); 
-			var private_res =  document.getElementById("lodging_type_private_residence"); 
-			var other_res = document.getElementById("lodging_type_other"); 
-
-			if(stay.value == "Hotel")
-			{
-				hotel.style.display = "block"; 
-				private_res.style.display = "none"; 
-				other_res.style.display = "none"; 
-			}
-			else if(stay.value == "Private_residence")
-			{
-				hotel.style.display = "none"; 
-				private_res.style.display = "block"; 
-				other_res.style.display = "none"; 
-			}
-			else if(stay.value == "Other")
-			{
-				hotel.style.display = "none"; 
-				private_res.style.display = "none"; 
-				other_res.style.display = "block"; 
-			}
-			else
-			{
-				hotel.style.display = "none"; 
-				private_res.style.display = "none"; 
-				other_res.style.display = "none"; 
-			}
-		}//function lodging_type
-
-		</script><!--Javascript methods form manipulation/info reception-->
-
-		<script id = "Object_Oriented_JavaScript">
-
-
-
-		</script><!--script Object_Oriented_JavaScript-->
-
-
-	</head><!--head-->
+		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+		<script type='text/javascript' src='OOB.js'></script>>
+	</head>
 
 	<body>
 
@@ -264,15 +33,12 @@
 
 				</div><!--div new_traveler-->
 
-
 				<button class = "ui-btn ui-btn-inline" onclick = "add_traveler()">Add Traveler</button>
 				<button class = "ui-btn ui-btn-inline" onclick = "remove_traveler()">Remove Traveler</button>
-
 
 				<label id = "trip_purpose_lbl">Purpose of Trip:</label><textarea id = "purpose_of_trip" rows = "10" cols = "30"></textarea>       <br/>
 				<label id = "filer_sts_lbl">Filer Simply True Statement: </label><textarea id = "filer_sts" rows = "10" cols = "30"></textarea>   <br/>
 				<label id = "group_sts_lbl">Group Simply True Statement: </label><textarea id = "group_sts" rows = "10" cols = "30"></textarea>   <br/>
-
 				
 				<h2>Location Contact Information</h2>
 				<!--Contact Information of person at location that IMB will reach out to-->
@@ -280,9 +46,7 @@
 				<label id = "location_contact_last_name_lbl">Last Name: </label><input type = "text" id = "location_contact_last_name"/><br/>
 				<label id = "location_contact_phone_number_lbl">Phone: </label><input type = "text" id = "location_contact_number" /><br/>
 
-
-
-				<label id = "elevated_risk_lbl">Elevated Risk Situation? </label><input type = "checkbox" id = "elevated_risk_check" onchange = "elevated_risk()"/><br/>
+				<label id = "elevated_risk_lbl">Elevated Risk Situation? </label><input type = "checkbox" id = "elevated_risk_check" onchange = "elevated_risk()"/>
 
 				<div id = "elevated_risk_situation">
 
@@ -312,7 +76,6 @@
 		<div id = "transportation_information" data-role = "page">
 			
 			<h1>Transportation Information</h1>
-			<br/>
 
 			<label>Day of Departure: </label>
 			<input type = "text" id = "day_of_departure"></input><br/> 
@@ -320,7 +83,6 @@
 			<input type = "text" id = "destination_of_leg"/><br/>
 			<label>Final Destination? </label>
 			<input type = "checkbox" id = "final_dest_indicator"/><br/>
-
 
 			<label>Mode of Travel:</label>
 			<form action = "" id = "mode_of_travel_selector">
@@ -350,9 +112,6 @@
 				
 				</form>
 		
-				<br/>
-				<br/>
-
 				<div id = "vehicle_type_rental">
 			
 					<label id = "rental_car_company" >Company: </label> 
@@ -367,9 +126,6 @@
 					<input type = "button" value = "Eticket Upload"/><br/>
 			
 				</div><!--vehicle type rental -->
-				
-				<br/>
-				<br/>
 
 				<div id = "vehicle_type_public">
 		
@@ -377,9 +133,6 @@
 					<input type = "text" id = "public_vehicle_desc"/>
 		
 				</div><!--vehicle_type_public-->
-
-				<br/>
-				<br/>
 
 				<div id = "vehicle_type_private">
 			
@@ -453,7 +206,6 @@
 		<div id = "lodging_information" data-role = "page">
 
 			<h1>Lodging Information </h1>
-			<br/>
 			
 			<label>Need a place to stay on this leg?</label>
 
@@ -521,5 +273,4 @@
 			<a href=" " data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Submit</a>
 
 		</div><!--div review_page-->
-
 	</body><!--body-->
