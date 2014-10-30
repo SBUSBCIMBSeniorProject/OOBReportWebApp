@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+	<head>
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+
+		<script id = "JavaScript_form_manipulation_info_reception">
+
+		window.onload = page_load_elements; 
+		//On load, hide all selectable fields until dropdown is used
+		var traveler_count = 1; 
+		//For add/remove traveler functions 
+		var leg_count = 1; 
+		//For keeping track of legs and leg information 
+
+		function page_load_elements()
+		{
+			
+			//var public_vehicle = document.getElementById("vehicle_type_public");
+			//var private_vehicle = document.getElementById("vehicle_type_private");
+			//var rental_vehicle = document.getElementById("vehicle_type_rental"); 
+			
+			//var commercial_plane = document.getElementById("plane_type_commercial");
+			//var private_plane = document.getElementById("plane_type_private"); 
+			
+			//var plane_mode = document.getElementById("plane_mode_of_travel");
+			//var vehicle_mode = document.getElementById("vehicle_mode_of_travel"); 
+			//var train_mode = document.getElementById("train_mode_of_travel");
+			//var other_mode = document.getElementById("other_mode_of_travel"); 
+
+			//var lodging_show = document.getElementById("lodging_section");
+		
+			//var hotel = document.getElementById("lodging_type_hotel"); 
+			//var private_res =  document.getElementById("lodging_type_private_residence"); 
+			//var other_res = document.getElementById("lodging_type_other"); 
+
+			//var ers_text = document.getElementById("elevated_risk_situation");  
+
+			//ers_text.style.display = "none";
+
+			//public_vehicle.style.display = "none";
+			//private_vehicle.style.display = "none";
+			//rental_vehicle.style.display = "none";
+			
+			//commercial_plane.style.display = "none";
+			//private_plane.style.display = "none";
+			
+			//plane_mode.style.display = "none";
+			//vehicle_mode.style.display = "none";
+			//train_mode.style.display = "none";
+			//other_mode.style.display = "none";
+			
+			//lodging_show.style.display = "none";
+			
+			//hotel.style.display = "none";
+			//private_res.style.display = "none";
+			//other_res.style.display = "none";
+		}//function page_load_elements
+
+		function elevated_risk()
+		{
+			var ers_check = document.getElementById("elevated_risk_check");
+			var ers_text = document.getElementById("elevated_risk_situation");  
+
+			if(ers_check.checked)
+			{
+				ers_text.style.display = "block"; 
+			}
+			else
+			{
+				ers_text.style.display = "none"; 
+			}
+
+		}//function elevated_risk
+
+		function transportation_choice()
+		{
+			var mode = document.getElementById("mode_of_travel"); 
+			var plane_mode = document.getElementById("plane_mode_of_travel");
+			var vehicle_mode = document.getElementById("vehicle_mode_of_travel"); 
+			var train_mode = document.getElementById("train_mode_of_travel");
+			var other_mode = document.getElementById("other_mode_of_travel"); 
+
+
+			if (mode.value == "Plane")
+			{
+				
+				plane_mode.style.display = "block";
+				vehicle_mode.style.display = "none";
+				train_mode.style.display = "none";
+				other_mode.style.display = "none";
+			}
+			else if (mode.value == "Vehicle")
+			{
+				//overall options 
+				vehicle_mode.style.display = "block";
+				plane_mode.style.display = "none";
+				train_mode.style.display = "none";
+				other_mode.style.display = "none";
+			}
+			else if (mode.value == "Train")
+			{
+				train_mode.style.display = "block";
+				plane_mode.style.display = "none";
+				vehicle_mode.style.display = "none";
+				other_mode.style.display = "none";
+			}
+			else if (mode.value == "Other")
+			{
+				other_mode.style.display = "block";
+				plane_mode.style.display = "none";
+				vehicle_mode.style.display = "none";
+				train_mode.style.display = "none";
+			}
+			else
+			{
+				other_mode.style.display = "none";
+				plane_mode.style.display = "none";
+				vehicle_mode.style.display = "none";
+				train_mode.style.display = "none";
+			}
+		}//function transportation_choice
+
+		function vehicle_type_choice()
+		{
+			//car options 
+			var vehicle_type = document.getElementById("type_of_vehicle"); 
+			var public_vehicle = document.getElementById("vehicle_type_public");
+			var private_vehicle = document.getElementById("vehicle_type_private");
+			var rental_vehicle = document.getElementById("vehicle_type_rental"); 
+
+			if(vehicle_type.value == "Rental")
+			{
+				public_vehicle.style.display = "none";
+				private_vehicle.style.display = "none"; 
+				rental_vehicle.style.display = "block";
+			}
+			else if(vehicle_type.value == "Private")
+			{
+				public_vehicle.style.display = "none";
+				private_vehicle.style.display = "block"; 
+				rental_vehicle.style.display = "none";
+			}
+			else if(vehicle_type.value == "Public")
+			{
+				public_vehicle.style.display = "block";
+				private_vehicle.style.display = "none"; 
+				rental_vehicle.style.display = "none";
+			}
+			else
+			{
+				public_vehicle.style.display = "none";
+				private_vehicle.style.display = "none"; 
+				rental_vehicle.style.display = "none";
+			}
+		}//function vehicle_type_choice
+
+		function plane_type_choice()
+		{
+			var plane_type = document.getElementById("type_of_plane"); 
+			var commercial_plane = document.getElementById("plane_type_commercial");
+			var private_plane = document.getElementById("plane_type_private"); 
+
+			if(plane_type.value == "Commercial")
+			{
+				commercial_plane.style.display = "block"; 
+				private_plane.style.display = "none"; 
+			}
+			else if(plane_type.value == "Private")
+			{
+				commercial_plane.style.display = "none"; 
+				private_plane.style.display = "block"; 
+			}
+			else
+			{
+				commercial_plane.style.display = "none"; 
+				private_plane.style.display = "none"; 
+			}
+		}//function plane_type_choice
+
+		function lodging_choice()
+		{
+			var lodging = document.getElementById("lodging_check");
+			var lodging_show = document.getElementById("lodging_section");
+
+			if(lodging.value == "Yes")
+			{
+				lodging_show.style.display = "block";
+			}
+			else
+			{
+				lodging_show.style.display = "none"; 
+			}
+
+		}//function lodging_choice
+
+		function lodging_type()
+		{
+			var stay = document.getElementById("type_of_lodging"); 
+			var hotel = document.getElementById("lodging_type_hotel"); 
+			var private_res =  document.getElementById("lodging_type_private_residence"); 
+			var other_res = document.getElementById("lodging_type_other"); 
+
+			if(stay.value == "Hotel")
+			{
+				hotel.style.display = "block"; 
+				private_res.style.display = "none"; 
+				other_res.style.display = "none"; 
+			}
+			else if(stay.value == "Private_residence")
+			{
+				hotel.style.display = "none"; 
+				private_res.style.display = "block"; 
+				other_res.style.display = "none"; 
+			}
+			else if(stay.value == "Other")
+			{
+				hotel.style.display = "none"; 
+				private_res.style.display = "none"; 
+				other_res.style.display = "block"; 
+			}
+			else
+			{
+				hotel.style.display = "none"; 
+				private_res.style.display = "none"; 
+				other_res.style.display = "none"; 
+			}
+		}//function lodging_type
+
+		</script><!--Javascript methods form manipulation/info reception-->
+
+		<script id = "Object_Oriented_JavaScript">
+
+
+
+		</script><!--script Object_Oriented_JavaScript-->
+
+
+	</head><!--head-->
+
+	<body>
+
+		<div id = "login_page" data-role = "page">
+
+			<a href="#contact_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Log in</a>
+
+		</div>
+
+		<div id = "contact_information" data-role = "page">
+			
+			<h1>Contact Information</h1>
+			
+			<form id = "contact_info_form">
+
+				<h2>Traveler Information</h2>
+
+				<label id = "trip_leader_lbl">Trip Leader?</label><input type = "checkbox" id = "trip_leader_check"/><br/>
+				<label id = "trip_member_first_name_lbl">First Name: </label><input type = "text" id = "trip_member_first_name"/><br/>
+				<label id = "trip_member_last_name_lbl">Last Name: </label><input type = "text" id = "trip_member_last_name"/><br/>
+				<label id = "trip_member_contact_number_lbl">Contact Number: </label><input type = "text" id = "trip_member_contact_number"/><br/>
+
+				
+				<div id = "new_traveler">
+
+				</div><!--div new_traveler-->
+
+
+				<button class = "ui-btn ui-btn-inline" onclick = "add_traveler()">Add Traveler</button>
+				<button class = "ui-btn ui-btn-inline" onclick = "remove_traveler()">Remove Traveler</button>
+
+
+				<label id = "trip_purpose_lbl">Purpose of Trip:</label><textarea id = "purpose_of_trip" rows = "10" cols = "30"></textarea>       <br/>
+				<label id = "filer_sts_lbl">Filer Simply True Statement: </label><textarea id = "filer_sts" rows = "10" cols = "30"></textarea>   <br/>
+				<label id = "group_sts_lbl">Group Simply True Statement: </label><textarea id = "group_sts" rows = "10" cols = "30"></textarea>   <br/>
+
+				
+				<h2>Location Contact Information</h2>
+				<!--Contact Information of person at location that IMB will reach out to-->
+				<label id = "location_contact_first_name_lbl">First Name: </label> <input type = "text" id = "location_contact_first_name"/><br/>
+				<label id = "location_contact_last_name_lbl">Last Name: </label><input type = "text" id = "location_contact_last_name"/><br/>
+				<label id = "location_contact_phone_number_lbl">Phone: </label><input type = "text" id = "location_contact_number" /><br/>
+
+
+
+				<label id = "elevated_risk_lbl">Elevated Risk Situation? </label><input type = "checkbox" id = "elevated_risk_check" onchange = "elevated_risk()"/><br/>
+
+				<div id = "elevated_risk_situation">
+
+					<label id = "ers_trip_member_first_name_lbl">First Name: </label><input type = "text" id = "ers_trip_member_first_name"/><br>
+					<label id = "ers_trip_member_last_name_lbl">Last Name: </label><input type = "text" id = "ers_trip_member_last_name"/><br>
+					<label id = "ers_trip_member_contact_number_lbl">Emergency Contact Phone:</label> <input type = "text" id = "ers_trip_member_contact_number" placeholder = "(111-111-1111)"/><br/>
+
+					<label id = "form_contact_lbl" >Form of Contact: </label> 
+					<form action = "" id = "form_contact_type">
+
+						<select id = "form of contact">
+							<option value = "cell_phone">Cell Phone</option>
+							<option value = "satellite_phone">Satellite Phone</option>
+							<option value = "email">Email</option>
+						</select>
+					
+					</form><!--form form_contact_type-->
+					
+				</div><!--div elevated_risk_situation-->
+
+				<a href="#transportation_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Continue</a>
+
+			</form><!--form contact_info_form-->
+
+		</div> <!--div contact_information-->
+
+		<div id = "transportation_information" data-role = "page">
+			
+			<h1>Transportation Information</h1>
+			<br/>
+
+			<label>Day of Departure: </label>
+			<input type = "text" id = "day_of_departure"></input><br/> 
+			<label>Leg Destination: </label>
+			<input type = "text" id = "destination_of_leg"/><br/>
+			<label>Final Destination? </label>
+			<input type = "checkbox" id = "final_dest_indicator"/><br/>
+
+
+			<label>Mode of Travel:</label>
+			<form action = "" id = "mode_of_travel_selector">
+					
+					<select id = "mode_of_travel" onchange = "transportation_choice()">
+						<option value = " "> </option>
+						<option value = "Vehicle" >Vehicle</option>
+						<option value = "Plane" >Plane</option>
+						<option value = "Train" >Train</option>
+						<option value = "other" >Other</option>
+					</select> <!--select mode_of_travel-->
+			
+			</form> <!--form mode_of_travel_selector-->
+
+			<div id = "vehicle_mode_of_travel">
+				
+				<label>Type of Vehicle:</label>
+
+				<form action = "">
+						
+						<select id = "type_of_vehicle" onchange = "vehicle_type_choice()">
+							<option value = " "> </option>
+							<option value = "Rental">Rental</option>
+							<option value = "Private">Private</option>
+							<option value = "Public">Public</option>
+						</select>
+				
+				</form>
+		
+				<br/>
+				<br/>
+
+				<div id = "vehicle_type_rental">
+			
+					<label id = "rental_car_company" >Company: </label> 
+					<input type = "text" id = "rental_car_company"/><br/>
+					<label id = "rental_car_pickup_date">Pickup Date: </label>
+					<input type = "text" id = "rental_car_pickup_date"/><br/>
+					<label id = "rental_car_dropoff_date">Dropoff Date: </label>
+					<input type = "text" id = "rental_car_dropoff_date"/><br/>
+					<label id = "rental_car_description">Car Description: </label>
+					<input type = "text" id = "rental_car_description"/><br/>
+					
+					<input type = "button" value = "Eticket Upload"/><br/>
+			
+				</div><!--vehicle type rental -->
+				
+				<br/>
+				<br/>
+
+				<div id = "vehicle_type_public">
+		
+					<label id = "public_vehicle_desc">Pertinent Transportation Information: </label>
+					<input type = "text" id = "public_vehicle_desc"/>
+		
+				</div><!--vehicle_type_public-->
+
+				<br/>
+				<br/>
+
+				<div id = "vehicle_type_private">
+			
+					<label id = "private_vehicle_desc">Pertinent Transportation Information: </label>
+					<input type = "text" id = "private_vehicle_desc"/>
+		
+				</div><!--vehicle_type_private-->
+
+			</div><!--vehicle_mode_of_travel-->		
+
+			<div id = "plane_mode_of_travel">
+
+				<label>Type of Air Transport:</label>
+
+				<form action = "">
+						<select id = "type_of_plane" onchange = "plane_type_choice()">
+							<option value = " "> </option>
+							<option value = "Commercial">Commercial</option>
+							<option value = "Private">Private</option>
+						</select>
+				</form>
+			
+				<div id = "plane_type_private">
+			
+					<label id = "private_plane_desc">Pertinent Information: </label>
+					<input type = "text" id = "private_plane_desc"/>
+			
+				</div><!--div plane_type_private-->
+
+				<div id = "plane_type_commercial">
+			
+					<label id = "commercial_flight_number">Flight Number: </label>
+					<input type = "text" id = "commercial_flight_number"/><br/>
+					<label id = "commercial_flight_carrier">Flight Carrier: </label>
+					<input type = "text" id = "commercial_flight_carrier"/><br/>
+					<label id = "commercial_flight_airport_departed">Airport Departed: </label>
+					<input type = "text" id = "commercial_flight_airport_departed"/><br/>
+					<label id = "commercial_flight_departure_time">Departure Time: </label> 
+					<input type = "text" id = "commercial_flight_departure_time"/><br/>
+					<label id = "commercial_flight_arrival_airport">Airport Arrived At: </label>
+					<input type = "text" id = "commercial_flight_arrival_airport"/><br/>
+					<label id = "commercial_flight_arrival_time">Arrival Time: </label>
+					<input type = "text" id = "commercial_flight_arrival_time"/><br/>
+					
+					<input type = "button" value = "Eticket Upload"/> 
+			
+				</div><!--div plane_type_commercial-->
+
+			</div><!--div plane_mode_of_travel-->
+
+		
+			<div id = "train_mode_of_travel">
+			
+				<label id = "train_transport_desc">Pertinent Information: </label>
+				<input type = "text" id = "train_transport_desc"/>
+		
+			</div> <!--div train_mode_of_travel-->
+			
+		
+			<div id = "other_mode_of_travel">	
+				
+				<label id = "other_transport_desc">Pertinent Information: </label>
+				<input type = "text" id = "other_transport_desc"/>
+		
+			</div><!--div other_mode_of_travel-->
+
+			<a href="#lodging_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Continue</a>
+
+		</div> <!--div transportation_information-->
+
+		<div id = "lodging_information" data-role = "page">
+
+			<h1>Lodging Information </h1>
+			<br/>
+			
+			<label>Need a place to stay on this leg?</label>
+
+			<form action = "">
+				<select id = "lodging_check" onchange = "lodging_choice()">
+					<option value = " "> </option>
+					<option value = "Yes">Yes</option>
+					<option value = "No">No</option>
+				</select>
+			</form>
+			
+			<div id = "lodging_section">
+				
+				Type of Lodging:
+				<form action = "">
+					<select id = "type_of_lodging" onchange = "lodging_type()">
+						<option value = " "> </option>
+						<option value = "Hotel">Hotel</option>
+						<option value = "Private_residence">Private Residence</option>
+						<option value = "other">Other</option>
+					</select>
+				</form><!--form type_of_lodging-->
+			
+				
+				<div id = "lodging_type_hotel">
+				
+					<label id = "hotel_name">Hotel Name: </label><input type = "text" id = "hotel_name"/><br/>
+					<label id = "hotel_address">Hotel Address: </label><input type = "text" id = "hotel_address"/><br/>
+					<label id = "hotel_phone">Hotel Phone: </label><input type = "text" id = "hotel_phone"/><br/>
+					<label id = "nights_at_hotel">Nights at Hotel: </label><input type = "text" id = "nights_at_hotel"/><br/>
+					<input type = "button" value = "Eticket Upload"/>
+				
+				</div><!--div lodging_type_hotel-->
+												
+				<div id = "lodging_type_private_residence">
+				
+					<label id = "priv_res_first_name">Owner First Name: </label><input type = "text" id = "priv_res_first_name"/> <br/>
+					<label id = "priv_res_last_name">Owner Last Name: </label><input type = "text" id = "priv_res_last_name"/><br/>
+					<label id = "priv_res_address">Residence Address: </label><input type = "text" id = "priv_res_address"/><br/>
+					<label id = "priv_res_phone_number">Residence Phone: </label><input type = "text" id = "priv_res_phone_number"/><br/>
+					<label id = "priv_res_nights_there">Nights at Location: </label><input type = "text" id = "priv_res_nights_there"/><br/>
+				
+				</div><!--div lodging_type_private_residence-->
+			
+				<div id = "lodging_type_other">					
+		
+					<label id = "other_nights_there">Nights at Location: </label><input type = "text" id = "other_nights_there"/><br/>
+					<label id = "other_lodging_desc">Description of Lodging Situation: </label><input type = "text" id = "other_lodging_desc"/><br/>
+					<label id = "other_contact_first_name">Contact First Name: </label><input type = "text" id = "other_contact_first_name"/><br/>
+					<label id = "other_contact_last_name">Contact Last Name: </label><input type = "text" id = "other_contact_last_name"/><br/>
+		
+				</div><!--div lodging_type_other-->
+				
+			</div><!--div lodging_section-->
+
+			
+			<a href="#transportation_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Previous Page</a>
+			<a href="#review_page" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Review Form</a>
+
+		</div> <!--div lodging_information-->
+
+		<div id = "review_page" data-role = "page">
+
+			<a href="#lodging_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Previous Page</a>
+			<a href=" " data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Submit</a>
+
+		</div><!--div review_page-->
+
+	</body><!--body-->

@@ -1,0 +1,58 @@
+/* Selectors are placed in alaphabetical order.
+ * A space is placed between the selector and opening curly brace.
+ */
+
+#elevated_risk_situation {
+	display: none;
+}
+
+#lodging_type_hotel {
+	display: none;
+}
+
+#lodging_type_other {
+	display: none;
+}
+
+#lodging_type_private_residence {
+	display: none;
+}
+
+#lodging_section {
+	display: none;
+}
+#other_mode_of_travel {
+	display: none;
+}
+
+#plane_mode_of_travel {
+	display: none;
+}
+
+#plane_type_commercial {
+	display: none;
+}
+
+#plane_type_private {
+	display: none;
+}
+
+#train_mode_of_travel {
+	display: none;
+}
+
+#vehicle_mode_of_travel {
+	display: none;
+}
+
+#vehicle_type_private {
+	display: none;
+}
+
+#vehicle_type_public {
+	display: none;
+}
+
+#vehicle_type_rental {
+	display: none;	
+}
