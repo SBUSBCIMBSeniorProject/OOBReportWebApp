@@ -2,674 +2,531 @@
 	<head>
 
 		<title>Out Of Bed Report</title>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
+		<link rel="stylesheet" type="text/css" href="jquery.mobile.theme-1.4.5.css" />
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
-
-		<script id = "JavaScript">
-
-		window.onload = page_load_elements; 
-		//On load, hide all selectable fields until dropdown is used
-		var traveler_count = 1; 
-		//For add/remove traveler functions 
-		var leg_count = 1; 
-		//For keeping track of legs and leg information 
-		
-
-		function page_load_elements()
-		{	
-			//Pre: Page has not been loaded
-			//Post: Page is loaded, all values listed have been hidden until corresponding dropdown menu has been changed
-			
-			var public_vehicle = document.getElementById("vehicle_type_public");
-			var private_vehicle = document.getElementById("vehicle_type_private");
-			var rental_vehicle = document.getElementById("vehicle_type_rental"); 
-			
-			var commercial_plane = document.getElementById("plane_type_commercial");
-			var private_plane = document.getElementById("plane_type_private"); 
-			
-			var plane_mode = document.getElementById("plane_mode_of_travel");
-			var vehicle_mode = document.getElementById("vehicle_mode_of_travel"); 
-			var train_mode = document.getElementById("train_mode_of_travel");
-			var other_mode = document.getElementById("other_mode_of_travel"); 
-
-			var lodging_show = document.getElementById("lodging_section");
-		
-			var hotel = document.getElementById("lodging_type_hotel"); 
-			var private_res =  document.getElementById("lodging_type_private_residence"); 
-			var other_res = document.getElementById("lodging_type_other"); 
-
-			var ers_text = document.getElementById("elevated_risk_situation");  
-
-			ers_text.style.display = "none";
-
-			public_vehicle.style.display = "none";
-			private_vehicle.style.display = "none";
-			rental_vehicle.style.display = "none";
-			
-			commercial_plane.style.display = "none";
-			private_plane.style.display = "none";
-			
-			plane_mode.style.display = "none";
-			vehicle_mode.style.display = "none";
-			train_mode.style.display = "none";
-			other_mode.style.display = "none";
-			
-			lodging_show.style.display = "none";
-			
-			hotel.style.display = "none";
-			private_res.style.display = "none";
-			other_res.style.display = "none";
-		}//function page_load_elements
-
-		function elevated_risk()
-		{
-			//Pre: Elevated risk section hidden, corresponding dropdown menu showing empty value
-			//Post: Elevated risk section showing 
-
-			var ers_check = document.getElementById("elevated_risk_check");
-			var ers_text = document.getElementById("elevated_risk_situation");  
-
-			if(ers_check.checked)
-			{
-				ers_text.style.display = "block"; 
-			}
-			else
-			{
-				ers_text.style.display = "none"; 
-			}
-
-		}//function elevated_risk
-
-		function transportation_choice()
-		{
-			//Pre: Transportation type fields are hidden, corresponding dropdown menu showing empty value 
-			//Post: Transportation type fields are showing according to value of corresponding dropdown menus 
-			var mode = document.getElementById("mode_of_travel"); 
-			var plane_mode = document.getElementById("plane_mode_of_travel");
-			var vehicle_mode = document.getElementById("vehicle_mode_of_travel"); 
-			var train_mode = document.getElementById("train_mode_of_travel");
-			var other_mode = document.getElementById("other_mode_of_travel"); 
-
-
-			if(mode.value == "Plane")
-			{
-				
-				plane_mode.style.display = "block";
-				vehicle_mode.style.display = "none";
-				train_mode.style.display = "none";
-				other_mode.style.display = "none";
-
-				
-
-			}
-			else if(mode.value == "Vehicle")
-			{
-				//overall options 
-				vehicle_mode.style.display = "block";
-				plane_mode.style.display = "none";
-				train_mode.style.display = "none";
-				other_mode.style.display = "none";
-
-				
-			}
-			else if(mode.value == "Train")
-			{
-				train_mode.style.display = "block";
-				plane_mode.style.display = "none";
-				vehicle_mode.style.display = "none";
-				other_mode.style.display = "none";
-			}
-			else if(mode.value == "Other")
-			{
-				other_mode.style.display = "block";
-				plane_mode.style.display = "none";
-				vehicle_mode.style.display = "none";
-				train_mode.style.display = "none";
-			}
-			else
-			{
-				other_mode.style.display = "none";
-				plane_mode.style.display = "none";
-				vehicle_mode.style.display = "none";
-				train_mode.style.display = "none";
-			}
-		}//function transportation_choice
-
-		function vehicle_type_choice()
-		{
-			//Pre: Mode_of_travel = vehicle, all fields hidden besides corresponding dropdown menus 
-			//Post: Information fields showing based on corresponding dropdown menus 
-
-			//car options 
-			var vehicle_type = document.getElementById("type_of_vehicle"); 
-			var public_vehicle = document.getElementById("vehicle_type_public");
-			var private_vehicle = document.getElementById("vehicle_type_private");
-			var rental_vehicle = document.getElementById("vehicle_type_rental"); 
-
-			if(vehicle_type.value == "Rental")
-			{
-				public_vehicle.style.display = "none";
-				private_vehicle.style.display = "none"; 
-				rental_vehicle.style.display = "block";
-			}
-			else if(vehicle_type.value == "Private")
-			{
-				public_vehicle.style.display = "none";
-				private_vehicle.style.display = "block"; 
-				rental_vehicle.style.display = "none";
-			}
-			else if(vehicle_type.value == "Public")
-			{
-				public_vehicle.style.display = "block";
-				private_vehicle.style.display = "none"; 
-				rental_vehicle.style.display = "none";
-			}
-			else
-			{
-				public_vehicle.style.display = "none";
-				private_vehicle.style.display = "none"; 
-				rental_vehicle.style.display = "none";
-			}
-		}//function vehicle_type_choice
-
-		function plane_type_choice()
-		{
-			//Pre: mode_of_travel = plane, all fields hidden besides corresponding dropdown menus 
-			//Post: Information fields showing based on corresponding dropdown menus 
-
-			var plane_type = document.getElementById("type_of_plane"); 
-			var commercial_plane = document.getElementById("plane_type_commercial");
-			var private_plane = document.getElementById("plane_type_private"); 
-
-			if(plane_type.value == "Commercial")
-			{
-				commercial_plane.style.display = "block"; 
-				private_plane.style.display = "none"; 
-			}
-			else if(plane_type.value == "Private")
-			{
-				commercial_plane.style.display = "none"; 
-				private_plane.style.display = "block"; 
-			}
-			else
-			{
-				commercial_plane.style.display = "none"; 
-				private_plane.style.display = "none"; 
-			}
-		}//function plane_type_choice
-
-		function lodging_choice()
-		{
-			//Pre: all corresponding input fields hidden except corresponding dropdown menus
-			//Post: Lodging section visible for information entry post type selection 
-
-			var lodging = document.getElementById("lodging_check");
-			var lodging_show = document.getElementById("lodging_section");
-
-			if(lodging.value == "Yes")
-			{
-				lodging_show.style.display = "block";
-			}
-			else
-			{
-				lodging_show.style.display = "none"; 
-			}
-
-		}//function lodging_choice
-
-		function lodging_type()
-		{
-			//Pre: lodging_check = yes, all input fields for this section hidden except corresponding dropdown menus
-			//Post: Lodging input sections shown based on dropdown choice
-
-			var stay = document.getElementById("type_of_lodging"); 
-			var hotel = document.getElementById("lodging_type_hotel"); 
-			var private_res =  document.getElementById("lodging_type_private_residence"); 
-			var other_res = document.getElementById("lodging_type_other"); 
-
-			if(stay.value == "Hotel")
-			{
-				hotel.style.display = "block"; 
-				private_res.style.display = "none"; 
-				other_res.style.display = "none"; 
-			}
-			else if(stay.value == "Private_residence")
-			{
-				hotel.style.display = "none"; 
-				private_res.style.display = "block"; 
-				other_res.style.display = "none"; 
-			}
-			else if(stay.value == "Other")
-			{
-				hotel.style.display = "none"; 
-				private_res.style.display = "none"; 
-				other_res.style.display = "block"; 
-			}
-			else
-			{
-				hotel.style.display = "none"; 
-				private_res.style.display = "none"; 
-				other_res.style.display = "none"; 
-			}
-		}//function lodging_type
-
-
-		//Following code is Object Oriented JavaScript to keep track of information from the form, and help compile JSON later on 
-
-
-		var traveler_array = new Array(); 
-		//For keeping track of travelers on the trip 
-		var transportation_array = new Array(); 
-		//For keeping track of transportation, with index +1 being the leg of the trip
-		var lodging_array = new Array(); 
-		//For keeping track of lodging, with index +1 being the leg of the trip 
-
-		var first_name = " "; 
-		var last_name = " "; 
-		var number = " "; 
-		var trip_purpose = " "; 
-		var filer_sts = " "; 
-		var group_sts = " "; 
-		var loc_cont_fname = " "; 
-		var loc_cont_lname = " "; 
-		var loc_cont_num = " "; 
-		var ert_fname = " "; 
-		var ert_lname = " "; 
-		var ert_num = " "; 
-		var ert_form_cont = " "; 
-
-
-		function Traveler(f, l, num)
-		{
-			//Needs to be added to add_traveler() method 
-			first_name = f; 
-			last_name = l; 
-			number = num; 
-		}
-
-		function Trip_Purpose_Info(p, g, fi)
-		{
-			trip_purpose = p; 
-			filer_sts = fi; 
-			group_sts = g; 
-		}
-
-		function Location_Contact_Info(fir, las, phon, boo)
-		{
-			loc_cont_num = phon; 
-			loc_cont_fname = fir; 
-			loc_cont_lname = las; 
-
-			if(boo)
-			{
-				Elevated_Risk_Situation(document.getElementById(ers_trip_member_first_name), document.getElementById(ers_trip_member_last_name), document.getElementById(ers_trip_member_contact_number), document.getElementById(ers_contact_type.value)); 
-			}
-		}
-
-		function Elevated_Risk_Situation(fn, ln, numb, form)
-		{
-			ert_fname = fn; 
-			ert_lname = ln; 
-			ert_num = numb; 
-			ert_form_cont = form; 
-		}
-
-
-
-		function Gather_Traveler_Info()
-		{
-			var traveler = new Traveler(document.getElementById(trip_member_first_name), document.getElementById(trip_member_last_name), document.getElementById(trip_member_contact_number)); 
-
-			traveler_array.push(traveler); 
-		}//function to add initial traveler to traveler array
-
-		function Gather_Purpose_Info()
-		{
-			var trip_details = new Trip_Purpose_Info(document.getElementById(purpose_of_trip), document.getElementById(filer_sts), document.getElementById(group_sts)); 
-		}//function to gather purpose information 
-
-		function Gather_Location_Info()
-		{
-			var location_cont; 
-
-			if(document.getElementById(elevated_risk_check).checked)
-			{
-				location_cont = new Location_Contact_Info(document.getElementById(location_contact_first_name), document.getElementById(location_contact_last_name), document.getElementById(location_contact_number), true); 
-			}
-			else
-			{
-				location_cont = new Location_Contact_Info(document.getElementById(location_contact_first_name), document.getElementById(location_contact_last_name), document.getElementById(location_contact_number), false); 
-			}
-
-		}//function to gather location contact information and ERS situation 
-
-		</script><!--script JavaScript-->
-
 
 	</head><!--head-->
 
 	<body>
 
-		<div id = "login_page" data-role = "page">
+
+<!--------------------------- Login Page -------------------------->
+		<div id = "login_page" data-role = "page" data-theme="a">
+
+			<div class="orange_stripe"></div>
+
+				<div class="login">
+
+				  <h1>Out of Bed Report</h1>
+				  <form class="form-signin">
+				    <input type="text" placeholder="Username" required autofocus>
+					  <input type="password" placeholder="Password" required>
+					  <a href="#contact_information" data-transition="slide" class="ui-btn ui-corner-all">Log in</a>
+				  </form>
+				  <p>
+				    <a href="#">Create Account</a> | <a href="#">Forgot Password?</a>
+				  <p>
+				  
+				</div><!--login-->
+
+				<div data-role="footer" data-position="fixed" data-id="myFooter">
+				  <div class="logo_stripe">
+				    <img src="images/IMBLogo.png" alt="IMB Logo" />
+				  </div>
+				  <div class="orange_stripe"></div>
+				</div>
 
 
-			<a href="#contact_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Log in</a>
+			
 
 		</div>
 
-		<div id = "contact_information" data-role = "page">
-			
-			<h1>Contact Information</h1>
-			
-			<form id = "contact_info_form">
-
-				<h2>Traveler Information</h2>
-
-				<label id = "trip_leader_lbl">Trip Leader?</label>
-				<input type = "checkbox" id = "trip_leader_check"/><br/>
-				<label id = "trip_member_first_name_lbl">First Name: </label>
-				<input type = "text" id = "trip_member_first_name"/><br/>
-				<label id = "trip_member_last_name_lbl">Last Name: </label>
-				<input type = "text" id = "trip_member_last_name"/><br/>
-				<label id = "trip_member_contact_number_lbl">Contact Number: </label>
-				<input type = "text" id = "trip_member_contact_number"/><br/>
-
-				<!--Call Gather_Traveler_Info-->
-				
-				
-				<div id = "new_traveler">
-
-				</div><!--div new_traveler-->
-
-
-				<a class="ui-btn ui-corner-all ui-btn-inline" onclick = " " >Add Traveler</a>
-				<a class="ui-btn ui-corner-all ui-btn-inline" onclick = " " >Remove Traveler</a>
-
-
-				<label id = "trip_purpose_lbl">Purpose of Trip:</label>
-				<textarea id = "purpose_of_trip" rows = "10" cols = "30"></textarea><br/>
-				<label id = "filer_sts_lbl">Filer Simply True Statement: </label>
-				<textarea id = "filer_sts" rows = "10" cols = "30"></textarea><br/>
-				<label id = "group_sts_lbl">Group Simply True Statement: </label>
-				<textarea id = "group_sts" rows = "10" cols = "30"></textarea><br/>
-
-				<!--Call Gather_Pupose_Info-->
-
-				
-				<h2>Location Contact Information</h2>
-				<!--Contact Information of person at location that IMB will reach out to-->
-				<label id = "location_contact_first_name_lbl">First Name: </label> 
-				<input type = "text" id = "location_contact_first_name"/><br/>
-				<label id = "location_contact_last_name_lbl">Last Name: </label>
-				<input type = "text" id = "location_contact_last_name"/><br/>
-				<label id = "location_contact_phone_number_lbl">Phone: </label>
-				<input type = "text" id = "location_contact_number" /><br/>
-
-
-				<label id = "elevated_risk_lbl">Elevated Risk Situation? </label>
-				<input type = "checkbox" id = "elevated_risk_check" onchange = "elevated_risk()"/><br/>
 
 
 
-				<div id = "elevated_risk_situation">
+<!--------------------------- Contact Information Page -------------------------->
 
-					<label id = "ers_trip_member_first_name_lbl">First Name: </label>
-					<input type = "text" id = "ers_trip_member_first_name"/><br>
-					<label id = "ers_trip_member_last_name_lbl">Last Name: </label>
-					<input type = "text" id = "ers_trip_member_last_name"/><br>
-					<label id = "ers_trip_member_contact_number_lbl">Emergency Contact Phone:</label> 
-					<input type = "text" id = "ers_trip_member_contact_number" placeholder = "(111-111-1111)"/><br/>
+		<div id = "contact_information" data-role = "page" class="ui-page-theme-a">
+			<div data-role="header" data-position="fixed">
+   				<h2>OOB ONLINE</h2>
+   				<a href="#login_page" data-icon="bars">Log Out</a>
+			</div>
 
-					<label id = "form_contact_lbl" >Form of Contact: </label> 
-					<form action = "" id = "ers_contact_type">
+			<div data role="fieldcontain" class="ui-grid-a">
+				<div class="ui-block-a"><h1 id="pageName">Traveler</h1></div>
+			</div><!-- /grid-a -->
 
-						<select id = "form of contact">
-							<option value = "cell_phone">Cell Phone</option>
-							<option value = "satellite_phone">Satellite Phone</option>
-							<option value = "email">Email</option>
-						</select>
-					
-					</form><!--form form_contact_type-->
+			<div data-role="main" class="ui-content">
 
-					<!--Call Gather_Location_Info (will also gather ERS info if selected)-->
-					
-				</div><!--div elevated_risk_situation-->
+				<form id = "contact_info">
 
+
+					<label>
+   						<input type="checkbox" id= "trip_leader" name="checkbox-0 ">Are you the group leader?
+					</label>
+
+
+					<div data-role="fieldcontain">
+						<label for="name">First Name:</label>
+						<input type="text" name="name" id="trip_member_first_name" value="" placeholder="First Name" />
+					</div>
+
+					<div data-role="fieldcontain">
+						<label for="name">Last Name:</label>
+						<input type="text" name="name" id="trip_member_last_name" value="" placeholder="Last Name" />
+					</div>
+
+					<div data-role="fieldcontain">
+						<label for="name">Phone Number:</label>
+						<input type="text" name="name" id="trip_member_contact_number" value="" placeholder="111-111-1111"/>
+					</div>
+
+
+					<div id = "new_traveler"></div>
+
+
+					<div class="ui-responsive" onclick ="add_traveler()">
+						<div class="ui-block-a">
+							<input type="button" data-icon="user" value="Add Traveler">
+						</div>
+					</div>
+
+
+
+					<div data-role="fieldcontain">
+						<label>Purpose of Trip:</label>
+						<textarea rows = "8" cols = "40"></textarea>
+					</div>
+
+					<div data-role="fieldcontain">
+						<label>Filer STS: </label>
+						<textarea rows = "8" cols = "40" ></textarea>
+					</div>
+
+					<div data-role="fieldcontain">
+						<label>Group STS: </label>
+						<textarea rows = "8" cols = "40"></textarea>
+					</div>
+
+
+					<!--Call Gather_Pupose_Info-->
+
+					<h3>Location Contact Information</h3>
+					<!--Contact Information of person at location that IMB will reach out to-->
+					<div data-role="fieldcontain">
+						<label for="name">First Name:</label>
+						<input type="text" name="name" id="name" value="" placeholder="First Name" />
+					</div>
+
+					<div data-role="fieldcontain">
+						<label for="name">Last Name:</label>
+						<input type="text" name="name" id="name" value="" placeholder="Last Name" />
+					</div>
+
+					<div data-role="fieldcontain">
+						<label for="name">Phone Number:</label>
+						<input type="text" name="name" id="name" value="" placeholder="111-111-1111"/>
+					</div>
+
+					<label id= "elevated_risk_lbl">
+   						<input type="checkbox" id= "elevated_risk_check" name="checkbox-0" onchange = "elevated_risk()">Elevated Risk Situation?
+					</label>
+
+
+					<div id = "elevated_risk_situation">
+
+						<div data-role="fieldcontain">
+							<label for="name" id="ers_trip_member_first_name_lbl">First Name:</label>
+							<input type="text" name="name" id="ers_trip_member_first_name" value="" placeholder="First Name" />
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="name" id = "ers_trip_member_last_name_lbl">Last Name:</label>
+							<input type="text" name="name" id="ers_trip_member_last_name" value="" placeholder="Last Name" />
+						</div>
+
+						<div data-role="fieldcontain">
+							<label for="name" id = "ers_trip_member_contact_number_lbl">Emergency Contact Phone:</label>
+							<input type="text" name="name" id="ers_trip_member_contact_number" value="" placeholder="111-111-1111"/>
+						</div>
+
+						<div data-role="fieldcontain">
+							<select name="form_contact_lbl" id="form_contact_lbl" data-native-menu="false">
+   					 			<option>Form of Contact</option>
+   		 						<option value="vehicle">Cell Phone</option>
+    							<option value="plane">Satellite Phone</option>
+    							<option value="train">Email</option>
+							</select>
+						</div>
+
+					</div><!--div elevated_risk_situation-->
+
+				</form><!--form contact_info_form-->
+
+			</div> <!--div contact_information-->
+
+			<div data-role="footer" data-position="fixed" data-id="myFooter" class="ui-bar">
 				<a href="#transportation_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Continue</a>
+			</div>
 
-			</form><!--form contact_info_form-->
+		</div>
 
-		</div> <!--div contact_information-->
+
+<!--------------------------- Transportation Page -------------------------->
 
 		<div id = "transportation_information" data-role = "page">
+			<div data-role="header" data-position="fixed">
+   				<h2>OOB ONLINE</h2>
+   				<a href="#login_page" data-icon="bars">Log Out</a>
+			</div>
 
-			<form id = "trans_info">
-			
-				<h1>Transportation Information</h1>
-				<br/>
+			<div data role="fieldcontain" class="ui-grid-a">
+				<div class="ui-block-a"><h1 id="pageName">Transportation</h1></div>
+			</div><!-- /grid-a -->
 
-				<label>Day of Departure: </label>
-				<input type = "text" id = "day_of_departure"></input><br/> 
-				<label>Leg Destination: </label>
-				<input type = "text" id = "destination_of_leg"/><br/>
-				<label>Final Destination? </label>
-				<input type = "checkbox" id = "final_dest_indicator"/><br/>
+			<div class="ui-content">
+
+				<form id = "trans_info">	
+
+					<div data-role="fieldcontain">
+						<label for="name">Day of Departure:</label>
+						<input type="text" name="name" id="day_of_departure" value="" placeholder="Day of Departure" />
+					</div>
+
+					<div data-role="fieldcontain">
+						<label for="name">Leg Destination:</label>
+						<input type="text" name="name" id="destination_of_leg" value="" placeholder="Destination of Leg" />
+					</div>
+
+					<label>
+   						<input type="checkbox" id= "final_dest_indicator" name="checkbox-0 ">Final Destination?
+					</label>
+
+					<div data-role="fieldcontain">
+						<select id = "mode_of_travel" onchange = "transportation_choice()" data-native-menu="false">
+	   					 	<option>Choose your mode of travel</option>
+	   		 				<option value="Vehicle">Vehicle</option>
+	    					<option value="Plane">Plane</option>
+	    					<option value="Train">Train</option>
+	    					<option value="Other">Other</option>
+						</select>
+					</div>
 
 
-				<label>Mode of Travel:</label>
-				<form action = "" id = "mode_of_travel_selector">
-						
-						<select id = "mode_of_travel" onchange = "transportation_choice()">
-							<option value = " "> </option>
-							<option value = "Vehicle" >Vehicle</option>
-							<option value = "Plane" >Plane</option>
-							<option value = "Train" >Train</option>
-							<option value = "Other" >Other</option>
-						</select> <!--select mode_of_travel-->
-				
-				</form> <!--form mode_of_travel_selector-->
+					<!--------------- Vehicle ---------------->
+					<div id = "vehicle_mode_of_travel">
 
-				<div id = "vehicle_mode_of_travel">
-					
-					<label>Type of Vehicle:</label>
-
-					<form action = "">
-							
-							<select id = "type_of_vehicle" onchange = "vehicle_type_choice()">
-								<option value = " "> </option>
+						<div data-role="fieldcontain">
+							<select id = "type_of_vehicle" onchange = "vehicle_type_choice()" data-native-menu="false">
+	   					 		<option>Choose your mode of travel</option>
 								<option value = "Rental">Rental</option>
 								<option value = "Private">Private</option>
 								<option value = "Public">Public</option>
 							</select>
+						</div>
+
+
+						<div id = "vehicle_type_rental">
+							<div data-role="fieldcontain">
+								<label id = "rental_car_company_lbl" >Company: </label> 
+								<input type = "text" id = "rental_car_company"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "rental_car_pickup_date_lbl">Pickup Date: </label>
+								<input type = "text" id = "rental_car_pickup_date"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "rental_car_dropoff_date_lbl">Dropoff Date: </label>
+								<input type = "text" id = "rental_car_dropoff_date"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "rental_car_description_lbl">Car Description: </label>
+								<input type = "text" id = "rental_car_description"/>
+							</div>
+						</div><!--vehicle type rental -->
 					
-					</form>
-			
-					<br/>
-					<br/>
 
-					<div id = "vehicle_type_rental">
-				
-						<label id = "rental_car_company" >Company: </label> 
-						<input type = "text" id = "rental_car_company"/><br/>
-						<label id = "rental_car_pickup_date">Pickup Date: </label>
-						<input type = "text" id = "rental_car_pickup_date"/><br/>
-						<label id = "rental_car_dropoff_date">Dropoff Date: </label>
-						<input type = "text" id = "rental_car_dropoff_date"/><br/>
-						<label id = "rental_car_description">Car Description: </label>
-						<input type = "text" id = "rental_car_description"/><br/>
-						
-						<input type = "button" value = "Eticket Upload"/><br/>
-				
-					</div><!--vehicle type rental -->
-					
-					<br/>
-					<br/>
+						<div id = "vehicle_type_public">
+							<div data-role="fieldcontain">
+								<label id = "public_vehicle_desc_lbl">Pertinent Transportation Information: </label>
+								<textarea rows = "8" cols = "40"></textarea>
+							</div>
+						</div><!--vehicle_type_public-->
 
-					<div id = "vehicle_type_public">
-			
-						<label id = "public_vehicle_desc">Pertinent Transportation Information: </label>
-						<input type = "text" id = "public_vehicle_desc"/>
-			
-					</div><!--vehicle_type_public-->
 
-					<br/>
-					<br/>
+						<div id = "vehicle_type_private">
+							<div data-role="fieldcontain">
+								<label id = "private_vehicle_desc_lbl">Pertinent Transportation Information: </label>
+								<textarea rows = "8" cols = "40"></textarea>
+							</div>
+						</div><!--vehicle_type_private-->
 
-					<div id = "vehicle_type_private">
-				
-						<label id = "private_vehicle_desc">Pertinent Transportation Information: </label>
-						<input type = "text" id = "private_vehicle_desc"/>
-			
-					</div><!--vehicle_type_private-->
+					</div><!--vehicle_mode_of_travel-->		
 
-				</div><!--vehicle_mode_of_travel-->		
 
-				<div id = "plane_mode_of_travel">
+					<!--------------- Plane ---------------->
+					<div id = "plane_mode_of_travel">
 
-					<label>Type of Air Transport:</label>
-
-					<form action = "">
-							<select id = "type_of_plane" onchange = "plane_type_choice()">
-								<option value = " "> </option>
+						<div data-role="fieldcontain">
+							<select id = "type_of_plane" onchange = "plane_type_choice()" data-native-menu="false">
+	   					 		<option>Type of Air Transport</option>
 								<option value = "Commercial">Commercial</option>
 								<option value = "Private">Private</option>
 							</select>
-					</form>
-				
-					<div id = "plane_type_private">
-				
-						<label id = "private_plane_desc">Pertinent Information: </label>
-						<input type = "text" id = "private_plane_desc"/>
-				
-					</div><!--div plane_type_private-->
+						</div>
 
-					<div id = "plane_type_commercial">
-				
-						<label id = "commercial_flight_number">Flight Number: </label>
-						<input type = "text" id = "commercial_flight_number"/><br/>
-						<label id = "commercial_flight_carrier">Flight Carrier: </label>
-						<input type = "text" id = "commercial_flight_carrier"/><br/>
-						<label id = "commercial_flight_airport_departed">Airport Departed: </label>
-						<input type = "text" id = "commercial_flight_airport_departed"/><br/>
-						<label id = "commercial_flight_departure_time">Departure Time: </label> 
-						<input type = "text" id = "commercial_flight_departure_time"/><br/>
-						<label id = "commercial_flight_arrival_airport">Airport Arrived At: </label>
-						<input type = "text" id = "commercial_flight_arrival_airport"/><br/>
-						<label id = "commercial_flight_arrival_time">Arrival Time: </label>
-						<input type = "text" id = "commercial_flight_arrival_time"/><br/>
-						
-						<input type = "button" value = "Eticket Upload"/> 
-				
-					</div><!--div plane_type_commercial-->
-
-				</div><!--div plane_mode_of_travel-->
-
-			
-				<div id = "train_mode_of_travel">
-				
-					<label id = "train_transport_desc">Pertinent Information: </label>
-					<input type = "text" id = "train_transport_desc"/>
-			
-				</div> <!--div train_mode_of_travel-->
-				
-			
-				<div id = "other_mode_of_travel">	
 					
-					<label id = "other_transport_desc">Pertinent Information: </label>
-					<input type = "text" id = "other_transport_desc"/>
+						<div id = "plane_type_private">
+							<div data-role="fieldcontain">
+								<label id = "private_plane_desc">Pertinent Information: </label>
+								<textarea rows = "8" cols = "40"></textarea>
+							</div>
+						</div><!--div plane_type_private-->
+
+
+						<div id = "plane_type_commercial">
+							<div data-role="fieldcontain">
+								<label id = "commercial_flight_number_lbl">Flight Number: </label>
+								<input type = "text" id = "commercial_flight_number"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "commercial_flight_carrier_lbl">Flight Carrier: </label>
+								<input type = "text" id = "commercial_flight_carrier"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "commercial_flight_airport_departed_lbl">Airport Departed: </label>
+								<input type = "text" id = "commercial_flight_airport_departed"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "commercial_flight_departure_time_lbl">Departure Time: </label> 
+								<input type = "text" id = "commercial_flight_departure_time"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "commercial_flight_arrival_airport_lbl">Airport Arrived At: </label>
+								<input type = "text" id = "commercial_flight_arrival_airport"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "commercial_flight_arrival_time_lbl">Arrival Time: </label>
+								<input type = "text" id = "commercial_flight_arrival_time"/>
+							</div>
+						</div><!--div plane_type_commercial-->
+					</div><!--div plane_mode_of_travel-->
+
 			
-				</div><!--div other_mode_of_travel-->
+					<!--------------- Train ---------------->
+					<div id = "train_mode_of_travel">
+						<div data-role="fieldcontain">
+							<label id = "train_transport_desc_lbl">Pertinent Information: </label>
+							<textarea rows = "8" cols = "40"></textarea>
+						</div>
+					</div> <!--div train_mode_of_travel-->
+				
+			
+					<!--------------- Other ---------------->
+					<div id = "other_mode_of_travel">
+						<div data-role="fieldcontain">
+							<label id = "other_transport_desc_lbl">Pertinent Information: </label>
+							<textarea rows = "8" cols = "40"></textarea>
+						</div>
+					</div><!--div other_mode_of_travel-->
 
-			</form><!--from trans_info-->
 
-			<a href="#contact_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Previous</a>
-			<a href="#lodging_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Continue</a>
+					<!-- Hardcodes Leg information on page -->
+					<div id = "new_transportation_div"></div>
+
+
+					<div class="ui-responsive" onclick = "add_trans()">
+						<div class="ui-block-a">
+							<input type="button" data-icon="plus" value="Add Transportation Information">
+						</div>
+					</div>
+
+				</form><!--from trans_info-->
+
+			</div>
+
+			<div data-role="footer" data-position="fixed" data-id="myFooter" class="ui-bar">
+				<a href="#contact_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Previous</a>
+				<a href="#lodging_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Continue</a>
+			</div>
 
 		</div> <!--div transportation_information-->
 
+
+
+<!--------------------------- Lodging Page -------------------------->		
+
 		<div id = "lodging_information" data-role = "page">
+			<div data-role="header" data-position="fixed">
+   				<h2>OOB ONLINE</h2>
+   				<a href="#login_page" data-icon="bars">Log Out</a>
+			</div>
 
-			<h1>Lodging Information </h1>
-			<br/>
+			<div data role="fieldcontain" class="ui-grid-a">
+				<div class="ui-block-a"><h1 id="pageName">Lodging</h1></div>
+			</div><!-- /grid-a -->
 
-			<form id = "lodging_info">
-			
-				<label>Need a place to stay on this leg?</label>
+			<div class="ui-content">
 
-				<form action = "">
-					<select id = "lodging_check" onchange = "lodging_choice()">
-						<option value = " "> </option>
-						<option value = "Yes">Yes</option>
-						<option value = "No">No</option>
-					</select>
-				</form>
-				
-				<div id = "lodging_section">
-					
-					Type of Lodging:
-					<form action = "">
-						<select id = "type_of_lodging" onchange = "lodging_type()">
-							<option value = " "> </option>
-							<option value = "Hotel">Hotel</option>
-							<option value = "Private_residence">Private Residence</option>
-							<option value = "Other">Other</option>
+				<form id = "lodging_info">
+
+					<div data-role="fieldcontain">
+						<select id = "lodging_check" onchange = "lodging_choice()" data-native-menu="false">
+	   					    <option>Need a place to stay on this leg?</option>
+							<option value = "Yes">Yes</option>
+							<option value = "No">No</option>
 						</select>
-					</form><!--form type_of_lodging-->
-				
-					
-					<div id = "lodging_type_hotel">
-					
-						<label id = "hotel_name">Hotel Name: </label><input type = "text" id = "hotel_name"/><br/>
-						<label id = "hotel_address">Hotel Address: </label><input type = "text" id = "hotel_address"/><br/>
-						<label id = "hotel_phone">Hotel Phone: </label><input type = "text" id = "hotel_phone"/><br/>
-						<label id = "nights_at_hotel">Nights at Hotel: </label><input type = "text" id = "nights_at_hotel"/><br/>
-						<input type = "button" value = "Eticket Upload"/>
-					
-					</div><!--div lodging_type_hotel-->
-													
-					<div id = "lodging_type_private_residence">
-					
-						<label id = "priv_res_first_name">Owner First Name: </label><input type = "text" id = "priv_res_first_name"/> <br/>
-						<label id = "priv_res_last_name">Owner Last Name: </label><input type = "text" id = "priv_res_last_name"/><br/>
-						<label id = "priv_res_address">Residence Address: </label><input type = "text" id = "priv_res_address"/><br/>
-						<label id = "priv_res_phone_number">Residence Phone: </label><input type = "text" id = "priv_res_phone_number"/><br/>
-						<label id = "priv_res_nights_there">Nights at Location: </label><input type = "text" id = "priv_res_nights_there"/><br/>
-					
-					</div><!--div lodging_type_private_residence-->
-				
-					<div id = "lodging_type_other">					
+					</div>
 			
-						<label id = "other_nights_there">Nights at Location: </label><input type = "text" id = "other_nights_there"/><br/>
-						<label id = "other_lodging_desc">Description of Lodging Situation: </label><input type = "text" id = "other_lodging_desc"/><br/>
-						<label id = "other_contact_first_name">Contact First Name: </label><input type = "text" id = "other_contact_first_name"/><br/>
-						<label id = "other_contact_last_name">Contact Last Name: </label><input type = "text" id = "other_contact_last_name"/><br/>
-			
-					</div><!--div lodging_type_other-->
 					
-				</div><!--div lodging_section-->
+					<div id = "lodging_section">
+						<div data-role="fieldcontain">
+							<select id = "type_of_lodging" onchange = "lodging_type()" data-native-menu="false">
+	   					    	<option>Type of Lodging</option>
+								<option value = "Hotel">Hotel</option>
+								<option value = "Private_residence">Private Residence</option>
+								<option value = "Other">Other</option>
+							</select>
+						</div>
+						
+						
+						<!--------------- Hotel ---------------->
+						<div id = "lodging_type_hotel">
+							<div data-role="fieldcontain">
+								<label id = "hotel_name_lbl">Hotel Name: </label>
+								<input type = "text" id = "hotel_name"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "hotel_address_lbl">Hotel Address: </label>
+								<input type = "text" id = "hotel_address"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "hotel_phone_lbl">Hotel Phone: </label>
+								<input type = "text" id = "hotel_phone"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "nights_at_hotel_lbl">Nights at Hotel: </label>
+								<input type = "text" id = "nights_at_hotel"/>
+							</div>
+						</div><!--div lodging_type_hotel-->
+														
+						
+						<!--------------- Private ---------------->
+						<div id = "lodging_type_private_residence">
+							<div data-role="fieldcontain">
+								<label id = "priv_res_first_name_lbl">Owner First Name: </label>
+								<input type = "text" id = "priv_res_first_name"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "priv_res_last_name_lbl">Owner Last Name: </label>
+								<input type = "text" id = "priv_res_last_name"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "priv_res_address_lbl">Residence Address: </label>
+								<input type = "text" id = "priv_res_address"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "priv_res_phone_number_lbl">Residence Phone: </label>
+								<input type = "text" id = "priv_res_phone_number"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "priv_res_nights_there_lbl">Nights at Location: </label>
+								<input type = "text" id = "priv_res_nights_there"/>
+							</div>				
+						</div><!--div lodging_type_private_residence-->
+					
 
-			</form><!--div lodging_info-->
+						<!--------------- Other ---------------->
+						<div id = "lodging_type_other">		
+							<div data-role="fieldcontain">
+								<label id = "other_nights_there_lbl">Nights at Location: </label>
+								<input type = "text" id = "other_nights_there"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "other_lodging_desc_lbl">Description of Lodging Situation: </label>
+								<input type = "text" id = "other_lodging_desc"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "other_contact_first_name_lbl">Contact First Name: </label>
+								<input type = "text" id = "other_contact_first_name"/>
+							</div>
+							<div data-role="fieldcontain">
+								<label id = "other_contact_last_name_lbl">Contact Last Name: </label>
+								<input type = "text" id = "other_contact_last_name"/>
+							</div>			
+						</div><!--div lodging_type_other-->
+						
+					</div><!--div lodging_section-->
 
-			
-			<a href="#transportation_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Previous Page</a>
-			<a href="#review_page" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Review Form</a>
+
+					<div id = "new_lodging_div"></div>
+
+
+					<div class="ui-responsive" onclick = "add_lodge()">
+						<div class="ui-block-a">
+							<input type="button" data-icon="plus" value="Add Lodging Information">
+						</div>
+					</div>
+
+				</form><!--div lodging_info-->
+			</div>
+
+			<div data-role="footer" data-position="fixed" data-id="myFooter" class="ui-bar">
+				<a href="#transportation_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Previous Page</a>
+				<a href="#review_page" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Review Form</a>
+			</div>
 
 		</div> <!--div lodging_information-->
 
+
+
+
+<!--------------------------- Review Page -------------------------->
 		<div id = "review_page" data-role = "page">
+			<div data-role="header" data-position="fixed">
+   				<h2>OOB ONLINE</h2>
+   				<a href="#login_page" data-icon="bars">Log Out</a>
+			</div>
 
-			<a href="#choose_reedit_page" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Change Form</a>
-			<a href=" " data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Submit</a>
+			<div data role="fieldcontain" class="ui-grid-a">
+				<div class="ui-block-a"><h1 id="pageName">Review</h1></div>
+			</div><!-- /grid-a -->
 
+			<div class="ui-content">
+
+				<a href="#choose_reedit_page" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Change Form</a>
+				<a href=" " data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Submit</a>
+
+			</div>	
+			<div data-role="footer" data-position="fixed" data-id="myFooter" class="ui-bar">
+			</div>
 		</div><!--div review_page-->
 
+
+
+
+<!--------------------------- Edit Page -------------------------->
 		<div id = "choose_reedit_page" data-role = "page">
+			<div data-role="header" data-position="fixed">
+   				<h2>OOB ONLINE</h2>
+   				<a href="#login_page" data-icon="bars">Log Out</a>
+			</div>
 
-			<a href="#contact_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Contact Information</a>
-			<a href="#transportation_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Transportation Information</a>
-			<a href="#lodging_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Lodging Information</a>
+			<div data role="fieldcontain" class="ui-grid-a">
+				<div class="ui-block-a"><h1 id="pageName">Edit</h1></div>
+			</div><!-- /grid-a -->
 
+			<div class="ui-content">
+				<a href="#contact_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Contact Information</a>
+				<a href="#transportation_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Transportation Information</a>
+				<a href="#lodging_information" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Lodging Information</a>
+			</div>
+			<div data-role="footer" data-position="fixed" data-id="myFooter" class="ui-bar">
+			</div>
 		</div><!--div choose reedit page-->
 
 	</body><!--body-->
