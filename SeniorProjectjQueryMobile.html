@@ -6,6 +6,9 @@
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
 
+		<!--Javascript functions located in OOB.js file -->
+		<script src = "OOB.js"></script>
+
 	</head><!--head-->
 
 	<body>
@@ -34,16 +37,12 @@
 				<label id = "trip_member_contact_number_lbl">Contact Number: </label>
 				<input type = "text" id = "trip_member_contact_number"/><br/>
 
-				<!--Call Gather_Traveler_Info-->
-				
-				
 				<div id = "new_traveler">
 
 				</div><!--div new_traveler-->
 
 
-				<a class="ui-btn ui-corner-all ui-btn-inline" onclick = " " >Add Traveler</a>
-				<a class="ui-btn ui-corner-all ui-btn-inline" onclick = " " >Remove Traveler</a>
+				<a class="ui-btn ui-corner-all ui-btn-inline" onclick = "add_traveler()" >Add Traveler</a>
 
 
 				<label id = "trip_purpose_lbl">Purpose of Trip:</label>
