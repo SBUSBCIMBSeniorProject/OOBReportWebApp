@@ -7,10 +7,6 @@ body {
   padding: 0px;
 }
 
-#contact_info, #trans_info, #lodging_info {
-  max-width: 1000px;
-}
-
 .login {
   margin-left: auto;
   margin-right: auto;
